@@ -25,8 +25,8 @@ class Blackjack:
         self.dealer_bust = False
 
     def hit(self, deck=1):
-        new_card = random.choice(self.deck)
-        # new_card = self.deck[3]
+        new_card = self.deck[0]
+        # new_card = random.choice(self.deck)
         self.deck.remove(new_card)
         if not self.split:
             self.player_deck1.append(new_card)
@@ -45,7 +45,8 @@ class Blackjack:
         return 0
 
     def dealer_hit(self):
-        new_card = random.choice(self.deck)
+        new_card = self.deck[0]
+        # new_card = random.choice(self.deck)
         self.dealer_deck.append(new_card)
         self.deck.remove(new_card)
         self.count_all()
@@ -126,6 +127,7 @@ class Blackjack:
             return [self.summary1()]
 
     def setup(self):
+        random.shuffle(self.deck)
         for _ in range(2):
             self.hit()
             self.dealer_hit()

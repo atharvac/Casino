@@ -7,7 +7,7 @@ width: int = 1280
 height: int = 720
 white = (255, 255, 255)
 black = (0, 0, 0)
-green = (80, 50, 25)
+brown = (80, 50, 25)
 
 pygame.init()
 
@@ -19,6 +19,8 @@ font2 = pygame.font.Font(None, 80)
 font3 = pygame.font.Font(None, 60)
 b1 = bk.Blackjack(2)
 P_bust = False
+
+
 class Button:
     def __init__(self, x1, y1, w, h, func, name, func_param=None, image=None):
         self.x1 = x1
@@ -112,7 +114,7 @@ def hit_ani(param):
     for _ in range(int(l_)):
         x += xinc
         y += yinc
-        gameDisplay.fill(green)
+        gameDisplay.fill(brown)
         gameDisplay.blit(card, (x, y))
         draw_all([])
         pygame.display.update()
@@ -133,7 +135,7 @@ def after_stand():
         p_bust = "Player Bust!"
         surf = font2.render(p_bust, True, white)
         # pygame.draw.rect(gameDisplay, black, (width*0.2, height*0.4, 400, 100))
-        gameDisplay.fill(green)
+        gameDisplay.fill(brown)
         gameDisplay.blit(tt, (width*0.72, height*0.43))
         if P_bust:
             gameDisplay.blit(surf, (width * 0.65, height * 0.7))
@@ -168,7 +170,7 @@ def main():
     buttons_list = all_buttons()
     exit1 = False
     while not exit1:
-        gameDisplay.fill(green)
+        gameDisplay.fill(brown)
         draw_all(buttons_list)
         display_cards()
         mask_dealer_card()

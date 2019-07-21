@@ -19,6 +19,7 @@ font2 = pygame.font.Font(None, 80)
 font3 = pygame.font.Font(None, 60)
 b1 = bk.Blackjack(2)
 P_bust = False
+P_bust2 = False
 
 
 class Button:
@@ -96,29 +97,46 @@ def draw_all(b_lst):
 
 def hit_ani(param):
     global P_bust
+    global b1
     result = b1.hit(param)
     if result == 1:
         P_bust = True
         after_stand()
-    '''backside = (80, height*0.1)
-    x = backside[0]
-    y = backside[1]
-    offset = (len(b1.player_deck1) - 1) * 50
-    p_coord = (width*0.3 + offset, height*0.6)
-    card = b1.player_deck1[-1].load_card()
-    xnc = p_coord[0] - backside[0]
-    ync = p_coord[1] - backside[1]
-    l_ = max(xnc, ync)
-    xinc = xnc/l_
-    yinc = ync/l_
-    for _ in range(int(l_)):
-        x += xinc
-        y += yinc
+
+
+def yes_split(n):
+    global b1
+    if n == 1:
+        b1.split()
+    return
+
+
+def ask_to_split():
+    global b1
+    cent = (width*0.35, height * 0.45)
+    ask = font2.render("Split?", True, white)
+    ex = False
+    b_lst = [Button(cent[0], cent[1]+90, 170, 60, yes_split, 'Yes', 1),
+             Button(cent[0], cent[1]+90, 170, 60, yes_split, 'No', 0)]
+    while not ex:
         gameDisplay.fill(brown)
-        gameDisplay.blit(card, (x, y))
-        draw_all([])
-        pygame.display.update()
-    '''
+        gameDisplay.blit(ask, cent)
+
+        display_button(b_lst[0])
+        display_button(b_lst[1])
+        pygame.display.update((0, cent[1], width, height + 200))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                ex = True
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse = pygame.mouse.get_pos()
+                for x in b_lst:
+                    if (x.x1 < mouse[0] < x.x1+x.w) and (x.y1 < mouse[1] < x.y1+x.h):
+                        if x.func_param is not None:
+                            x.func(x.func_param)
+                        else:
+                            x.func()
+        clock.tick(120)
 
 
 def after_stand():
@@ -151,7 +169,10 @@ def after_stand():
     time.sleep(3)
     b1.reset_hand()
     P_bust = False
-    print(b1.setup())  # Split Logic starts here
+    if b1.setup() == 1:  # Split Logic starts here
+        ask_to_split()
+    else:
+        return
 
 
 def all_buttons():
@@ -161,12 +182,18 @@ def all_buttons():
                  Button(width*0.05, height*0.7, 170, 60, after_stand, "STAND"),
                  ]
     else:  # HERE
-        b_lst = []
+        b_lst = [Button(width * 0.05, height * 0.85, 170, 60, hit_ani, "HIT", 1),
+                 Button(width * 0.05, height * 0.7, 170, 60, after_stand, "STAND"),
+                 Button(width * 0.9, height * 0.85, 170, 60, hit_ani, "HIT 2", 2),
+                 Button(width * 0.9, height * 0.7, 170, 60, after_stand, "STAND 2")
+                 ]
     return b_lst
 
 
 def main():
-    print(b1.setup())
+    if b1.setup() == 1:  # Split Logic starts here
+        ask_to_split()
+
     buttons_list = all_buttons()
     exit1 = False
     while not exit1:

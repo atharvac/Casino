@@ -107,7 +107,7 @@ def hit_ani(param):
 def yes_split(n):
     global b1
     if n == 1:
-        b1.split()
+        b1.split = True
     return
 
 
@@ -166,7 +166,7 @@ def after_stand():
         gameDisplay.blit(font.render(d1_score, True, white), (base_d_x - 50, base_d_y + 10))
         gameDisplay.blit(font.render(d2_score, True, white), (base_d_x - 50, base_d_y + 200))
     pygame.display.update()
-    time.sleep(3)
+    time.sleep(1)
     b1.reset_hand()
     P_bust = False
     if b1.setup() == 1:  # Split Logic starts here

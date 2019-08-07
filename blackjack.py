@@ -14,8 +14,7 @@ class Blackjack:
         self.playerTotal2Alt = 0
 
         self.no_of_decks = decks
-        self.reserve_deck = generate_deck(self.no_of_decks)
-        self.deck = self.reserve_deck
+        self.deck = generate_deck(self.no_of_decks)
         self.player_deck1 = []
         self.player_deck2 = []
         self.dealer_deck = []
@@ -25,7 +24,12 @@ class Blackjack:
         self.dealer_bust = False
 
     def hit(self, deck=1):
-        new_card = self.deck[0]
+        try:
+            new_card = self.deck[0]
+        except IndexError as e:
+            self.deck = generate_deck(self.no_of_decks)
+            random.shuffle(self.deck)
+            new_card = self.deck[0]
         # new_card = random.choice(self.deck)
         self.deck.remove(new_card)
         if not self.split:
@@ -45,7 +49,12 @@ class Blackjack:
         return 0
 
     def dealer_hit(self):
-        new_card = self.deck[0]
+        try:
+            new_card = self.deck[0]
+        except IndexError as e:
+            self.deck = generate_deck(self.no_of_decks)
+            random.shuffle(self.deck)
+            new_card = self.deck[0]
         # new_card = random.choice(self.deck)
         self.dealer_deck.append(new_card)
         self.deck.remove(new_card)

@@ -116,8 +116,8 @@ def ask_to_split():
     cent = (width*0.35, height * 0.45)
     ask = font2.render("Split?", True, white)
     ex = False
-    b_lst = [Button(cent[0], cent[1]+90, 170, 60, yes_split, 'Yes', 1),
-             Button(cent[0], cent[1]+90, 170, 60, yes_split, 'No', 0)]
+    b_lst = [Button(cent[0]-120, cent[1]+90, 170, 60, yes_split, 'Yes', 1),
+             Button(cent[0]+120, cent[1]+90, 170, 60, yes_split, 'No', 0)]
     while not ex:
         gameDisplay.fill(brown)
         gameDisplay.blit(ask, cent)
@@ -132,10 +132,12 @@ def ask_to_split():
                 mouse = pygame.mouse.get_pos()
                 for x in b_lst:
                     if (x.x1 < mouse[0] < x.x1+x.w) and (x.y1 < mouse[1] < x.y1+x.h):
+                        ex = True
                         if x.func_param is not None:
                             x.func(x.func_param)
                         else:
                             x.func()
+
         clock.tick(120)
 
 
@@ -184,8 +186,8 @@ def all_buttons():
     else:  # HERE
         b_lst = [Button(width * 0.05, height * 0.85, 170, 60, hit_ani, "HIT", 1),
                  Button(width * 0.05, height * 0.7, 170, 60, after_stand, "STAND"),
-                 Button(width * 0.9, height * 0.85, 170, 60, hit_ani, "HIT 2", 2),
-                 Button(width * 0.9, height * 0.7, 170, 60, after_stand, "STAND 2")
+                 Button(width * 0.8, height * 0.85, 170, 60, hit_ani, "HIT 2", 2),
+                 Button(width * 0.8, height * 0.7, 170, 60, after_stand, "STAND 2")
                  ]
     return b_lst
 

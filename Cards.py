@@ -54,6 +54,7 @@ def generate_deck(number_of_decks):
     for i in range(number_of_decks):
         for card in CARDS:
             cards_list.append(Cards(card, i))
+            #cards_list.append(Cards('9H', i))
 
     for card in cards_list:
         card.set_val()
